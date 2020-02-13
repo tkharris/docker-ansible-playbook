@@ -29,6 +29,7 @@ RUN set -x && \
     \
     echo "==> Installing Ansible..."  && \
     pip3 install ansible && \
+    pip3 install "pywinrm>=0.3.0" && \
     \
     echo "==> Cleaning up..."  && \
     apk del build-dependencies && \
