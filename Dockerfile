@@ -1,6 +1,4 @@
-FROM alpine:3.7
-
-ENV ANSIBLE_VERSION 2.5.0
+FROM alpine:latest
 
 ENV BUILD_PACKAGES \
   bash \
@@ -9,19 +7,8 @@ ENV BUILD_PACKAGES \
   openssh-client \
   sshpass \
   git \
-  python \
-  py-boto \
-  py-dateutil \
-  py-httplib2 \
-  py-jinja2 \
-  py-paramiko \
-  py-pip \
-  py-yaml \
+  python3 \
   ca-certificates
-
-# If installing ansible@testing
-#RUN \
-#	echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> #/etc/apk/repositories
 
 RUN set -x && \
     \
@@ -31,18 +18,17 @@ RUN set -x && \
       musl-dev \
       libffi-dev \
       openssl-dev \
-      python-dev && \
+      python3-dev && \
     \
     echo "==> Upgrading apk and system..."  && \
     apk update && apk upgrade && \
     \
     echo "==> Adding Python runtime..."  && \
     apk add --no-cache ${BUILD_PACKAGES} && \
-    pip install --upgrade pip && \
-    pip install python-keyczar docker-py && \
+    pip3 install --upgrade pip && \
     \
     echo "==> Installing Ansible..."  && \
-    pip install ansible==${ANSIBLE_VERSION} && \
+    pip3 install ansible && \
     \
     echo "==> Cleaning up..."  && \
     apk del build-dependencies && \
